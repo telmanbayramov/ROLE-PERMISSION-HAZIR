@@ -104,31 +104,31 @@ class UserController extends Controller
         return response()->json(['message' => 'İstifadəçi məlumatları silindi!'], 200);
     }
 
-    public function assignRole(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'role' => 'required|string|exists:roles,name',
-        ]);
+    // public function assignRole(Request $request, $id)
+    // {
+    //     $validatedData = $request->validate([
+    //         'role' => 'required|string|exists:roles,name',
+    //     ]);
 
-        $user = User::findOrFail($id);
+    //     $user = User::findOrFail($id);
 
-        $role = Role::where('name', $validatedData['role'])->first();
-        if ($role) {
-            $user->assignRole($role);
-        }
+    //     $role = Role::where('name', $validatedData['role'])->first();
+    //     if ($role) {
+    //         $user->assignRole($role);
+    //     }
 
-        return response()->json(['message' => 'Rol uğurla təyin edildi!'], 200);
-    }
+    //     return response()->json(['message' => 'Rol uğurla təyin edildi!'], 200);
+    // }
 
-    public function givePermission(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'permission' => 'required|string|exists:permissions,name',
-        ]);
+    // public function givePermission(Request $request, $id)
+    // {
+    //     $validatedData = $request->validate([
+    //         'permission' => 'required|string|exists:permissions,name',
+    //     ]);
 
-        $user = User::findOrFail($id);
-        $user->givePermissionTo($validatedData['permission']);
+    //     $user = User::findOrFail($id);
+    //     $user->givePermissionTo($validatedData['permission']);
 
-        return response()->json(['message' => 'İcazə uğurla verildi!'], 200);
-    }
+    //     return response()->json(['message' => 'İcazə uğurla verildi!'], 200);
+    // }
 }
