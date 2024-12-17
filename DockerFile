@@ -1,0 +1,28 @@
+# Dockerfile for Laravel Project
+
+# PHP ve Apache kullanarak temel bir görüntü
+FROM php:8.1-apache
+
+# Gerekli paketleri yükle
+RUN apt-get update && apt-get install -y \
+    libzip-dev unzip libpng-dev libonig-dev curl \
+    && docker-php-ext-install zip pdo pdo_mysql
+
+# Composer'ı yükle
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Laravel uygulaması için çalışma dizinini ayarla
+WORKDIR /var/www/html
+
+# Laravel uygulamasını kopyala
+COPY . .
+
+# İzinleri ayarla
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage
+
+# Laravel için Apache yapılandırması
+RUN a2enmod rewrite
+
+# Sunucuyu başlat
+CMD ["apache2-foreground"]
